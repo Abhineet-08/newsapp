@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newsapp/screens/home_screen.dart';
+import 'package:newsapp/controller/homepage_controller.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,7 +21,7 @@ class SplashScreenState extends State<SplashScreen> {
       // Splash duration
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const HomePageController()),
       );
     }
   }
