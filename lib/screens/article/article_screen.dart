@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newsapp/controller/news_controller.dart';
 import 'package:newsapp/screens/details/news_detail_screen.dart';
-import 'package:newsapp/widgets/article/my_search_bar.dart';
 import 'package:newsapp/widgets/home/news_tile.dart';
 
 class ArticleScreen extends StatelessWidget {
