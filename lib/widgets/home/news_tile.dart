@@ -5,6 +5,7 @@ class NewsTile extends StatelessWidget {
   final String time;
   final String title;
   final String author;
+  final VoidCallback onTap;
 
   const NewsTile({
     super.key,
@@ -12,71 +13,75 @@ class NewsTile extends StatelessWidget {
     required this.title,
     required this.author,
     required this.time,
+    required this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 15),
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primaryContainer,
-          borderRadius: BorderRadius.circular(20)),
-      child: Row(
-        children: [
-          Container(
-            width: againGetCardWidth(context),
-            height: 120,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Image.network(
-                imageUrl,
-                height: 200,
-                width: double.infinity,
-                fit: BoxFit.cover,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 15),
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            borderRadius: BorderRadius.circular(20)),
+        child: Row(
+          children: [
+            Container(
+              width: againGetCardWidth(context),
+              height: 120,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Image.network(
+                  imageUrl,
+                  height: 200,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      radius: 12,
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(author),
-                  ],
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  title,
-                  maxLines: 2,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Text(
-                  time,
-                  style: Theme.of(context).textTheme.labelSmall,
-                )
-              ],
+            const SizedBox(
+              width: 10,
             ),
-          )
-        ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      CircleAvatar(
+                        radius: 12,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                      ),
+                      const SizedBox(width: 10),
+                      Text(author),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    title,
+                    maxLines: 2,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    time,
+                    style: Theme.of(context).textTheme.labelSmall,
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
