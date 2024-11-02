@@ -58,9 +58,12 @@ class NewsTile extends StatelessWidget {
                       CircleAvatar(
                         radius: 12,
                         backgroundColor: Theme.of(context).colorScheme.primary,
+                        child: Text((author.isNotEmpty ?? false)
+                            ? author[0]
+                            : "N"),
                       ),
                       const SizedBox(width: 10),
-                      Text(author),
+                      Flexible(child: Text(author)),
                     ],
                   ),
                   const SizedBox(

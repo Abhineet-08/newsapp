@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:newsapp/modals/news_modal.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class NewsController extends GetxController {
   RxList<NewsModal> trendingNewsList = <NewsModal>[].obs;
@@ -14,6 +15,8 @@ class NewsController extends GetxController {
   RxList<NewsModal> combinedNewsList = <NewsModal>[].obs;
   RxList<NewsModal> limitedCombinedNewsList = <NewsModal>[].obs;
   RxList<NewsModal> filteredNewsList = <NewsModal>[].obs;
+  RxBool isSpeaking = false.obs;
+  FlutterTts flutterTts = FlutterTts();
 
   @override
   void onInit() {
@@ -22,6 +25,15 @@ class NewsController extends GetxController {
     getNewsTotal();
     getNewsApple();
     getNewsTesla();
+
+    ever(combinedNewsList, (_) {
+      filteredNewsList.value = combinedNewsList;
+    });
+
+    // Listen for when speech completes to toggle isSpeaking off
+    flutterTts.setCompletionHandler(() {
+      isSpeaking.value = false;
+    });
   }
 
   Future<void> getTrendingNews() async {
@@ -131,7 +143,7 @@ class NewsController extends GetxController {
 
   void updateLimitedCombinedList() {
     // Update the limitedCombinedNewsList to the first 10 items
-    limitedCombinedNewsList.value = combinedNewsList.sublist(0,10).obs;
+    limitedCombinedNewsList.value = combinedNewsList.sublist(0, 10).obs;
   }
 
   void filterByCategory(String category) {
@@ -151,5 +163,23 @@ class NewsController extends GetxController {
       default:
         filteredNewsList.value = combinedNewsList; // Show all if no category matches
     }
+  }
+
+  Future<void> speak(String text) async {
+    if (isSpeaking.value) return;
+
+    // Trim trailing dots or other special characters at the end
+    text = text.replaceAll(RegExp(r'[.\s]+$'), '');
+
+    isSpeaking.value = true;
+    await flutterTts.setLanguage("en-us");
+    await flutterTts.setPitch(1);
+    await flutterTts.setSpeechRate(0.8);
+    await flutterTts.speak(text);
+  }
+
+  void stop() async {
+    await flutterTts.stop();
+    isSpeaking.value = false;
   }
 }

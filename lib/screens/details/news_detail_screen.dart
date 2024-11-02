@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:newsapp/controller/news_controller.dart';
 import 'package:newsapp/modals/news_modal.dart';
 
 class NewsDetailScreen extends StatelessWidget {
@@ -12,6 +14,7 @@ class NewsDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NewsController newsController = Get.put(NewsController());
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -104,6 +107,46 @@ class NewsDetailScreen extends StatelessWidget {
                           ),
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 15),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: [
+                          Obx(
+                            () => newsController.isSpeaking.value
+                                ? IconButton(
+                                    onPressed: () {
+                                      newsController.stop();
+                                    },
+                                    icon: const Icon(
+                                      Icons.stop_rounded,
+                                      size: 50,
+                                    ),
+                                  )
+                                : IconButton(
+                                    onPressed: () {
+                                      newsController.speak(
+                                          news.description ?? "No Description");
+                                    },
+                                    icon: const Icon(
+                                      Icons.play_arrow_rounded,
+                                      size: 50,
+                                    ),
+                                  ),
+                          ),
+                          Expanded(
+                            child: Lottie.asset(
+                              'assets/animation/audiowaves.json',
+                              height: 70,
+                              animate: newsController.isSpeaking.value,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 15),
                     Row(

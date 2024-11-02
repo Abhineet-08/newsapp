@@ -39,6 +39,8 @@ dependencies:
   get: ^4.6.6
   http: ^1.2.2
   shimmer: ^3.0.0
+  flutter_tts: ^4.0.2
+  lottie: ^3.1.3
 
 dev_dependencies:
   flutter_test:
@@ -65,6 +67,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/splash.png
+    - assets/animation/audiowaves.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
